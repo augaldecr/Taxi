@@ -60,22 +60,8 @@ namespace Taxi.Web.Controllers
             {
                 taxiEntity.Plaque = taxiEntity.Plaque.ToUpper();
                 _context.Add(taxiEntity);
-                try
-                {
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (Exception ex)
-                {
-                    if (ex.InnerException.Message.Contains("duplicate"))
-                    {
-                        ModelState.AddModelError(string.Empty, "Plaque already exist!");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, ex.Message);
-                    }
-                }
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
             return View(taxiEntity);
         }
@@ -139,12 +125,22 @@ namespace Taxi.Web.Controllers
                 return NotFound();
             }
 
-            var taxiEntity = await _context.Taxis.FindAsync(id);
+            var taxiEntity = await _context.Taxis
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (taxiEntity == null)
             {
                 return NotFound();
             }
 
+            return View(taxiEntity);
+        }
+
+        // POST: Taxis/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var taxiEntity = await _context.Taxis.FindAsync(id);
             _context.Taxis.Remove(taxiEntity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
