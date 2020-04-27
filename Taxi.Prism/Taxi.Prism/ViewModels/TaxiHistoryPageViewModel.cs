@@ -1,24 +1,31 @@
 ﻿using Prism.Commands;
 using Prism.Navigation;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Taxi.Common.Models;
 using Taxi.Common.Services;
+using Taxi.Prism.Views;
 
 namespace Taxi.Prism.ViewModels
 {
     public class TaxiHistoryPageViewModel : ViewModelBase
     {
+        private readonly INavigationService _navigationService;
         private readonly IAPIService _aPIService;
         private TaxiResponse _taxi;
         private bool _isRunning;
+        private List<TripItemViewModel> _trips;
         private DelegateCommand _checkPlaqueCommand;
+        private DelegateCommand _selectTripCommand;
 
         public TaxiHistoryPageViewModel(INavigationService navigationService,
             IAPIService aPIService)
             : base(navigationService)
         {
             Title = "Taxi history";
+            this._navigationService = navigationService;
             _aPIService = aPIService;
         }
 
@@ -26,6 +33,24 @@ namespace Taxi.Prism.ViewModels
         {
             get => _isRunning;
             set => SetProperty(ref _isRunning, value);
+        }
+
+        public DelegateCommand SelectTripCommand => _selectTripCommand ??
+            (_selectTripCommand = new DelegateCommand(SelectTripAsync));
+
+        private async void SelectTripAsync()
+        {
+            NavigationParameters parameters = new NavigationParameters
+            {
+                {"trip", this }
+            };
+            await _navigationService.NavigateAsync(nameof(TripDetailPage), parameters);
+        }
+
+        public List<TripItemViewModel> Trips
+        {
+            get => _trips;
+            set => SetProperty(ref _trips, value);
         }
 
         public TaxiResponse Taxi
@@ -64,6 +89,14 @@ namespace Taxi.Prism.ViewModels
             IsRunning = true;
 
             string url = App.Current.Resources["UrlAPI"].ToString();
+            var connection = await _aPIService.CheckConnectionAsync(url);
+            if (!connection)
+            {
+                IsRunning = false;
+                await App.Current.MainPage.DisplayAlert("Error", "Check the internet conection",
+                    "Ok");
+                return;
+            }
             Response response = await _aPIService.GetTaxiAsync(Plaque, url, "api", "/Taxis");
             IsRunning = false;
 
@@ -77,6 +110,22 @@ namespace Taxi.Prism.ViewModels
             }
 
             Taxi = (TaxiResponse)response.Result;
+            Trips = Taxi.Trips.Where(t => t.Qualification != 0).Select(t => new TripItemViewModel(_navigationService)
+            {
+                EndDate = t.EndDate,
+                Id = t.Id,
+                Qualification = t.Qualification,
+                Remarks = t.Remarks,
+                Source = t.Source,
+                SourceLatitude = t.SourceLatitude,
+                SourceLongitude = t.SourceLongitude,
+                StartDate = t.StartDate,
+                Target = t.Target,
+                TargetLatitude = t.TargetLatitude,
+                TargetLongitude = t.TargetLongitude,
+                TripDetails = t.TripDetails,
+                User = t.User
+            }).OrderByDescending(t => t.StartDate).ToList();
         }
     }
 }

@@ -94,7 +94,7 @@ namespace Taxi.Web.Data
                            Qualification = 4.5f,
                            Source = "Hospital de Guápiles",
                            Target = "Universidad Latina",
-                           Remarks = "Excelente servicio",
+                           Remarks = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus varius turpis lectus, non euismod quam fermentum eu. Quisque eu lorem nec quam egestas condimentum. Praesent turpis metus, porta nec aliquet id, laoreet ac sapien. Mauris sit amet neque dolor. Nullam id varius enim. Integer tempus bibendum facilisis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque nunc tortor, facilisis vel lorem et, porttitor congue lorem.",
                            User = user1,
                        },
                        new Trip
@@ -104,7 +104,7 @@ namespace Taxi.Web.Data
                            Qualification = 5f,
                            Source = "Universidad Latina",
                            Target = "Hospital de Guápiles",
-                           Remarks = "Impecable servicio",
+                           Remarks = "Sed erat nibh, faucibus tincidunt commodo et, varius in diam. Sed dui elit, blandit in ullamcorper ut, ullamcorper a elit. Sed et sapien a nunc cursus pretium. Sed efficitur risus et nisl convallis mattis. Sed euismod, erat sit amet feugiat venenatis, ipsum diam volutpat leo, quis luctus dolor arcu eget nisi. Morbi volutpat nibh nec auctor ullamcorper. Fusce congue eu ligula id dictum. Proin posuere, nisi a auctor auctor, odio enim tristique diam, eget molestie mauris nisi ullamcorper risus. Vivamus sed nibh bibendum, ullamcorper odio vitae, fermentum nulla.",
                            User = user1,
                        },
                    }

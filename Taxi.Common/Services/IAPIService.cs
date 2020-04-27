@@ -7,5 +7,6 @@ namespace Taxi.Common.Services
     {
         Task<Response> GetTaxiAsync(string plaque, string urlBase,
             string servicePrefix, string controller);
+        Task<bool> CheckConnectionAsync(string url);
     }
 }
