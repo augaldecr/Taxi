@@ -41,6 +41,32 @@ namespace Taxi.Web.Helpers
             };
         }
 
+        public TripResponse ToTripResponse(Trip tripEntity)
+        {
+            return new TripResponse
+            {
+                EndDate = tripEntity.EndDate,
+                Id = tripEntity.Id,
+                Qualification = tripEntity.Qualification,
+                Remarks = tripEntity.Remarks,
+                Source = tripEntity.Source,
+                SourceLatitude = tripEntity.SourceLatitude,
+                SourceLongitude = tripEntity.SourceLongitude,
+                StartDate = tripEntity.StartDate,
+                Target = tripEntity.Target,
+                TargetLatitude = tripEntity.TargetLatitude,
+                TargetLongitude = tripEntity.TargetLongitude,
+                TripDetails = tripEntity.TripDetails?.Select(td => new TripDetailsResponse
+                {
+                    Date = td.Date,
+                    Id = td.Id,
+                    Latitude = td.Latitude,
+                    Longitude = td.Longitude
+                }).ToList(),
+                User = ToUserResponse(tripEntity.User)
+            };
+        }
+
         private UserResponse ToUserResponse(User user)
         {
             if (user == null)

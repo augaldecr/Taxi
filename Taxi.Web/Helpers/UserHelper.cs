@@ -50,7 +50,7 @@ namespace Taxi.Web.Helpers
                 return null;
             }
 
-            User newUser = await GetUserByEmailAsync(model.Username);
+            User newUser = await GetUserAsync(model.Username);
             await AddUserToRoleAsync(newUser, userEntity.UserType.ToString());
             return newUser;
         }
@@ -73,7 +73,7 @@ namespace Taxi.Web.Helpers
             }
         }
 
-        public async Task<User> GetUserByEmailAsync(string email)
+        public async Task<User> GetUserAsync(string email)
         {
             return await _userManager.FindByEmailAsync(email);
         }
@@ -105,6 +105,26 @@ namespace Taxi.Web.Helpers
         public async Task<IdentityResult> UpdateUserAsync(User user)
         {
             return await _userManager.UpdateAsync(user);
+        }
+
+        public async Task<User> GetUserAsync(Guid userId)
+        {
+            return await _userManager.FindByIdAsync(userId.ToString());
+        }
+
+        public async Task<SignInResult> ValidatePasswordAsync(User user, string password)
+        {
+            return await _signInManager.CheckPasswordSignInAsync(user, password, false);
+        }
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync(User user)
+        {
+            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        }
+
+        public async Task<IdentityResult> ConfirmEmailAsync(User user, string token)
+        {
+            return await _userManager.ConfirmEmailAsync(user, token);
         }
     }
 }

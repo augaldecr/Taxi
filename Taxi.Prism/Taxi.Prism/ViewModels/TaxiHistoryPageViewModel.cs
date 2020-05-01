@@ -1,11 +1,11 @@
 ﻿using Prism.Commands;
 using Prism.Navigation;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Taxi.Common.Models;
 using Taxi.Common.Services;
+using Taxi.Prism.Helpers;
 using Taxi.Prism.Views;
 
 namespace Taxi.Prism.ViewModels
@@ -24,8 +24,8 @@ namespace Taxi.Prism.ViewModels
             IAPIService aPIService)
             : base(navigationService)
         {
-            Title = "Taxi history";
-            this._navigationService = navigationService;
+            Title = Languages.TaxiHistory;
+            _navigationService = navigationService;
             _aPIService = aPIService;
         }
 
@@ -68,10 +68,9 @@ namespace Taxi.Prism.ViewModels
             if (string.IsNullOrEmpty(Plaque))
             {
                 await App.Current.MainPage.DisplayAlert(
-                    "Error",
-                    "You must enter a plaque",
-                    "OK"
-                    );
+                    Languages.Error,
+                    Languages.PlaqueError1,
+                    Languages.Accept);
                 return;
             }
 
@@ -80,21 +79,23 @@ namespace Taxi.Prism.ViewModels
             if (!regex.IsMatch(Plaque))
             {
                 await App.Current.MainPage.DisplayAlert(
-                    "Error",
-                    "The plaque must start with three letters and end with three numbers.",
-                    "Accept");
+                    Languages.Error,
+                    Languages.PlaqueError2,
+                    Languages.Accept);
                 return;
             }
 
             IsRunning = true;
 
             string url = App.Current.Resources["UrlAPI"].ToString();
-            var connection = await _aPIService.CheckConnectionAsync(url);
+            bool connection = await _aPIService.CheckConnectionAsync(url);
             if (!connection)
             {
                 IsRunning = false;
-                await App.Current.MainPage.DisplayAlert("Error", "Check the internet conection",
-                    "Ok");
+                await App.Current.MainPage.DisplayAlert(
+                    Languages.Error,
+                    Languages.ConnectionError,
+                    Languages.Accept);
                 return;
             }
             Response response = await _aPIService.GetTaxiAsync(Plaque, url, "api", "/Taxis");
@@ -103,9 +104,9 @@ namespace Taxi.Prism.ViewModels
             if (!response.IsSuccess)
             {
                 await App.Current.MainPage.DisplayAlert(
-                    "Error",
+                    Languages.Error,
                     response.Message,
-                    "Accept");
+                    Languages.Accept);
                 return;
             }
 

@@ -7,40 +7,50 @@
              xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:rating="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
              prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:i18n="clr-namespace:Taxi.Prism.Helpers"
              x:Class="Taxi.Prism.Views.TaxiHistoryPage"
              BackgroundColor="{StaticResource ColorBackground}"
              Title="{Binding Title}">
 
     <AbsoluteLayout>
         <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
-                     AbsoluteLayout.LayoutFlags="All"
+                     AbsoluteLayout.LayoutFlags="All" 
                      Padding="5">
             <StackLayout Orientation="Horizontal">
-                <Label Text="Plaque"
-                   VerticalOptions="Center"/>
+                <Label Text="{i18n:Translate Plaque}"
+                       VerticalOptions="Center"/>
                 <Entry HorizontalOptions="FillAndExpand" 
-                   Placeholder="Enter plaque..." 
-                   Text="{Binding Plaque}"
-                   VerticalOptions="Center"/>
-                <Button Command="{Binding CheckPlaqueCommand}"
-                    Margin="10,0"
-                    Text="Check Plaque"/>
+                       Placeholder="{i18n:Translate PlaquePlaceHolder}" 
+                       Text="{Binding Plaque}"
+                       VerticalOptions="Center"/>
+                <Button BackgroundColor="Navy"
+                        Command="{Binding CheckPlaqueCommand}"
+                        CornerRadius="20"
+                        HeightRequest="40"
+                        Margin="10,0"
+                        Text="{i18n:Translate CheckPlaque}"
+                        TextColor="White"/>
             </StackLayout>
-            <rating:SfRating HorizontalOptions="Center"
+            <rating:SfRating HorizontalOptions="Center" 
                              IsEnabled="False"
                              Margin="0,5"
                              Precision="Exact"
-                             Value="{Binding Taxi.Qualification}"/>
-            <Label FontAttributes="Bold" 
-               FontSize="Large"
-               HorizontalOptions="Center"
-               Text="{Binding Taxi.Qualification, StringFormat='{0:N2}'}"/>
+                             Value="{Binding Taxi.Qualification}" />
+            <StackLayout HorizontalOptions="Center" 
+                         Orientation="Horizontal">
+                <Label FontAttributes="Bold" 
+                       FontSize="Large"
+                       Text="{i18n:Translate Qualification}"/>
+                <Label FontAttributes="Bold" 
+                       FontSize="Large"
+                       Text="{Binding Taxi.Qualification, StringFormat='{0:N2}'}"/>
+            </StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Number of trips:"/>
+                <Label Text="{i18n:Translate NumberOfTrips}"/>
                 <Label Text="{Binding Taxi.NumberOfTrips, StringFormat='{0:N0}'}"/>
             </StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Label Text="Driver:"/>
+                <Label Text="{i18n:Translate Driver}"/>
                 <Label Text="{Binding Taxi.User.FullName, StringFormat='{0:N0}'}"/>
             </StackLayout>
             <Grid>
@@ -54,26 +64,23 @@
                     <ColumnDefinition Width="48" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0"
-                   FontAttributes="Bold"
-                   Text="Start Date"/>
+                       FontAttributes="Bold"
+                       Text="{i18n:Translate StartDate}"/>
                 <Label Grid.Column="1"
-                   FontAttributes="Bold"
-                   Text="Score"/>
+                       FontAttributes="Bold"
+                       Text="{i18n:Translate Score}"/>
                 <Label Grid.Column="2"
-                   FontAttributes="Bold"
-                   Text="Remarks"/>
+                       FontAttributes="Bold"
+                       Text="{i18n:Translate Remarks}"/>
             </Grid>
 
-            <CollectionView ItemsSource="{Binding Trips}">
+            <CollectionView ItemsSource="{Binding Taxi.Trips}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding SelectTripCommand}"/>
-                            </Grid.GestureRecognizers>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width=".8*" />
                                 <ColumnDefinition Width=".5*" />
@@ -81,33 +88,31 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Label Grid.Column="0"
-                               Text="{Binding StartDateLocal, StringFormat='{0:yyyy/MM/dd}'}"
-                               VerticalOptions="Center"/>
+                                   Text="{Binding StartDateLocal, StringFormat='{0:yyyy/MM/dd HH:mm}'}"
+                                   VerticalOptions="Center"/>
                             <Label Grid.Column="1"
-                               Text="{Binding Qualification, StringFormat='{0:N2}'}"
-                               VerticalOptions="Center"/>
+                                   Text="{Binding Qualification, StringFormat='{0:N2}'}"
+                                   VerticalOptions="Center"/>
                             <Label Grid.Column="2"
-                                   MaxLines="2"
-                                   LineBreakMode="TailTruncation"
                                    Text="{Binding Remarks}"
                                    VerticalOptions="Center"/>
                             <Image Grid.Column="3" 
-                               Source="ic_more_vert"/>
+                                   Source="ic_more_vert"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </StackLayout>
-        <busyindicator:SfBusyIndicator AnimationType="Gear"
+        <busyindicator:SfBusyIndicator AnimationType="Gear" 
                                        AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
-                                       AbsoluteLayout.LayoutFlags="All"
-                                       BackgroundColor="{StaticResource ColorDanger}"
-                                       HorizontalOptions="Center"
-                                       TextColor="{StaticResource ColorFontInverse}"
-                                       IsVisible="{Binding IsRunning}"
-                                       Title="Loading..."
-                                       VerticalOptions="Center"
-                                       ViewBoxWidth="80"
-                                       ViewBoxHeight="80"/>
+                	                   AbsoluteLayout.LayoutFlags="All"
+                	                   BackgroundColor="Silver"
+                	                   HorizontalOptions="Center"
+                	                   TextColor="White"
+                	                   IsVisible="{Binding IsRunning}"
+                	                   Title="{i18n:Translate Loading}"
+                	                   VerticalOptions="Center"
+                	                   ViewBoxWidth="80"
+                	                   ViewBoxHeight="80" />
     </AbsoluteLayout>
 </ContentPage>

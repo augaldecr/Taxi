@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Taxi.Common.Models;
+using Taxi.Prism.Helpers;
 
 namespace Taxi.Prism.ViewModels
 {
@@ -10,8 +11,7 @@ namespace Taxi.Prism.ViewModels
     {
         private readonly INavigationService _navigationService;
 
-        public TaxiMasterDetailPageViewModel(INavigationService navigationService) :
-            base(navigationService)
+        public TaxiMasterDetailPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _navigationService = navigationService;
             LoadMenus();
@@ -23,51 +23,51 @@ namespace Taxi.Prism.ViewModels
         {
             List<Menu> menus = new List<Menu>
             {
-                  new Menu
-                  {
-                      Icon = "ic_airport_shuttle",
-                      PageName = "HomePage",
-                      Title = "New Trip",
-                  },
-                  new Menu
-                  {
-                      Icon = "ic_local_taxi",
-                      PageName = "TaxiHistoryPage",
-                      Title = "Taxi history",
-                  },
-                  new Menu
-                  {
-                      Icon = "ic_people",
-                      PageName = "GroupPage",
-                      Title = "User group",
-                  },
-                  new Menu
-                  {
-                      Icon = "ic_account_circle",
-                      PageName = "ModifyUserPage",
-                      Title = "Modify user",              
-                  },
-                  new Menu
-                  {
-                      Icon = "ic_report",
-                      PageName = "ReportPage",
-                      Title = "Report an incident",
-                  },
-                  new Menu
-                  {
-                      Icon = "ic_exit_to_app",
-                      PageName = "LoginPage",
-                      Title = "Log in",
-                  },
+                new Menu
+                {
+                    Icon = "ic_airport_shuttle",
+                    PageName = "HomePage",
+                    Title = Languages.NewTrip
+                },
+                new Menu
+                {
+                    Icon = "ic_local_taxi",
+                    PageName = "TaxiHistoryPage",
+                    Title = Languages.SeeTaxiHistory
+                },
+                new Menu
+                {
+                    Icon = "ic_people",
+                    PageName = "GroupPage",
+                    Title = Languages.AdminMyUserGroup
+                },
+                new Menu
+                {
+                    Icon = "ic_account_circle",
+                    PageName = "ModifyUserPage",
+                    Title = Languages.ModifyUser
+                },
+                new Menu
+                {
+                    Icon = "ic_report",
+                    PageName = "ReportPage",
+                    Title = Languages.ReportAnIncident
+                },
+                new Menu
+                {
+                    Icon = "ic_exit_to_app",
+                    PageName = "LoginPage",
+                    Title = Languages.LogIn
+                }
             };
 
             Menus = new ObservableCollection<MenuItemViewModel>(
-                  menus.Select(m => new MenuItemViewModel(_navigationService)
-                  {
-                      Icon = m.Icon,
-                      PageName = m.PageName,
-                      Title = m.Title,
-                  }).ToList());
+                menus.Select(m => new MenuItemViewModel(_navigationService)
+                {
+                    Icon = m.Icon,
+                    PageName = m.PageName,
+                    Title = m.Title
+                }).ToList());
         }
     }
 }
