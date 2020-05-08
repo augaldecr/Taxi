@@ -38,7 +38,14 @@ namespace Taxi.Web.Data
             var user2 = await CheckUserAsync("2223", "Brandon", "Ugalde",
                 "brandon@gmail.com", "22222222", "Coopevigua 2", UserType.User);
 
+            User user3 = await CheckUserAsync("6060", "Sandra", "Usuga",
+                "sandra@yopmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.User);
+            User user4 = await CheckUserAsync("7070", "Lisa", "Marin",
+                "luisa@yopmail.com", "350 634 2747", "Calle Luna Calle Sol", UserType.User);
+
+
             await CheckTaxisAsync(driver, user1, user2);
+            await CheckUserGroups(user1, user2, user3, user4);
         }
 
         private async Task<User> CheckUserAsync(string document, string firstName,
@@ -143,6 +150,37 @@ namespace Taxi.Web.Data
             });
 
             await _dataContext.SaveChangesAsync();
+        }
+
+        private async Task CheckUserGroups(User user1, User user2, User user3, User user4)
+        {
+            if (!_dataContext.UserGroups.Any())
+            {
+                _dataContext.UserGroups.Add(new UserGroup
+                {
+                    User = user1,
+                    Users = new List<UserGroupDetailEntity>
+            {
+                new UserGroupDetailEntity { User = user2 },
+                new UserGroupDetailEntity { User = user3 },
+                new UserGroupDetailEntity { User = user4 }
+            }
+                });
+
+                _dataContext.UserGroups.Add(new UserGroup
+                {
+                    User = user2,
+                    Users = new List<UserGroupDetailEntity>
+            {
+                new UserGroupDetailEntity { User = user1 },
+                new UserGroupDetailEntity { User = user3 },
+                new UserGroupDetailEntity { User = user4 }
+            }
+                });
+
+                await _dataContext.SaveChangesAsync();
+            }
+
         }
     }
 }

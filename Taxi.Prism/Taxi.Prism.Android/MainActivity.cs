@@ -27,6 +27,7 @@ namespace Taxi.Prism.Droid
 
             CrossCurrentActivity.Current.Init(this, bundle);
             global::Xamarin.Forms.Forms.Init(this, bundle);
+            Xamarin.Essentials.Platform.Init(this, bundle);
             Xamarin.FormsMaps.Init(this, bundle);
             new SfBusyIndicatorRenderer();
             new SfRatingRenderer();
@@ -38,7 +39,6 @@ namespace Taxi.Prism.Droid
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-
     }
 
     public class AndroidInitializer : IPlatformInitializer

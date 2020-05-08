@@ -325,9 +325,6 @@ namespace Taxi.Web.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("UserGroupId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -344,8 +341,6 @@ namespace Taxi.Web.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("UserGroupId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -365,6 +360,56 @@ namespace Taxi.Web.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserGroups");
+                });
+
+            modelBuilder.Entity("Taxi.Web.Data.Entities.UserGroupDetailEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("UserGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserGroupId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserGroupDetails");
+                });
+
+            modelBuilder.Entity("Taxi.Web.Data.Entities.UserGroupRequestEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ProposalUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RequiredUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("Token")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProposalUserId");
+
+                    b.HasIndex("RequiredUserId");
+
+                    b.ToTable("UserGroupRequests");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -443,18 +488,33 @@ namespace Taxi.Web.Migrations
                         .HasForeignKey("TripId");
                 });
 
-            modelBuilder.Entity("Taxi.Web.Data.Entities.User", b =>
-                {
-                    b.HasOne("Taxi.Web.Data.Entities.UserGroup", null)
-                        .WithMany("Users")
-                        .HasForeignKey("UserGroupId");
-                });
-
             modelBuilder.Entity("Taxi.Web.Data.Entities.UserGroup", b =>
                 {
                     b.HasOne("Taxi.Web.Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Taxi.Web.Data.Entities.UserGroupDetailEntity", b =>
+                {
+                    b.HasOne("Taxi.Web.Data.Entities.UserGroup", "UserGroup")
+                        .WithMany("Users")
+                        .HasForeignKey("UserGroupId");
+
+                    b.HasOne("Taxi.Web.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Taxi.Web.Data.Entities.UserGroupRequestEntity", b =>
+                {
+                    b.HasOne("Taxi.Web.Data.Entities.User", "ProposalUser")
+                        .WithMany()
+                        .HasForeignKey("ProposalUserId");
+
+                    b.HasOne("Taxi.Web.Data.Entities.User", "RequiredUser")
+                        .WithMany()
+                        .HasForeignKey("RequiredUserId");
                 });
 #pragma warning restore 612, 618
         }

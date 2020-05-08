@@ -8,6 +8,6 @@ namespace Taxi.Web.Data.Entities
 
         public User User { get; set; }
 
-        public ICollection<User> Users { get; set; }
+        public ICollection<UserGroupDetailEntity> Users { get; set; }
     }
 }

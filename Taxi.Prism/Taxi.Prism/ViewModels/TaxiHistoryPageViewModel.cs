@@ -13,7 +13,7 @@ namespace Taxi.Prism.ViewModels
     public class TaxiHistoryPageViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
-        private readonly IAPIService _aPIService;
+        private readonly IApiService _aPIService;
         private TaxiResponse _taxi;
         private bool _isRunning;
         private List<TripItemViewModel> _trips;
@@ -21,7 +21,7 @@ namespace Taxi.Prism.ViewModels
         private DelegateCommand _selectTripCommand;
 
         public TaxiHistoryPageViewModel(INavigationService navigationService,
-            IAPIService aPIService)
+            IApiService aPIService)
             : base(navigationService)
         {
             Title = Languages.TaxiHistory;

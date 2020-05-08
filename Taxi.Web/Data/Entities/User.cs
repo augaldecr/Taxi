@@ -41,5 +41,10 @@ namespace Taxi.Web.Data.Entities
         public ICollection<TaxiEntity> Taxis { get; set; }
 
         public ICollection<Trip> Trips { get; set; }
+
+        public static implicit operator User(UserGroup v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
