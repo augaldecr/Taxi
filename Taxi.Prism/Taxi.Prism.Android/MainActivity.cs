@@ -28,6 +28,7 @@ namespace Taxi.Prism.Droid
             CrossCurrentActivity.Current.Init(this, bundle);
             global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.Essentials.Platform.Init(this, bundle);
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
             Xamarin.FormsMaps.Init(this, bundle);
             new SfBusyIndicatorRenderer();
             new SfRatingRenderer();
