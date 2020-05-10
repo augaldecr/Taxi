@@ -204,5 +204,7 @@ namespace Taxi.Prism.Helpers
         public static string MyTrips => Resource.MyTrips;
 
         public static string EndDate => Resource.EndDate;
+
+        public static string LoginFacebook => Resource.LoginFacebook;
     }
 }

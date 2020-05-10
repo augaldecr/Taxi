@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Threading.Tasks;
+using Taxi.Common.Models;
 using Taxi.Web.Data.Entities;
 using Taxi.Web.Models;
 
@@ -10,6 +11,7 @@ namespace Taxi.Web.Helpers
     {
         Task<User> GetUserAsync(string email);
         Task<User> GetUserAsync(Guid userId);
+        Task<User> AddUserAsync(FacebookProfile model);
         Task<IdentityResult> AddUserAsync(User user, string password);
         Task CheckRoleAsync(string roleName);
         Task AddUserToRoleAsync(User user, string roleName);

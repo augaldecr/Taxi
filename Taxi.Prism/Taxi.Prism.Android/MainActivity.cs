@@ -1,12 +1,16 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Java.Security;
 using Plugin.CurrentActivity;
+using Plugin.FacebookClient;
 using Plugin.Permissions;
 using Prism;
 using Prism.Ioc;
 using Syncfusion.SfBusyIndicator.XForms.Droid;
 using Syncfusion.SfRating.XForms.Droid;
+using System;
 
 namespace Taxi.Prism.Droid
 {
@@ -24,7 +28,7 @@ namespace Taxi.Prism.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
-
+            FacebookClientManager.Initialize(this);
             CrossCurrentActivity.Current.Init(this, bundle);
             global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.Essentials.Platform.Init(this, bundle);
@@ -35,7 +39,13 @@ namespace Taxi.Prism.Droid
             LoadApplication(new App(new AndroidInitializer()));
         }
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            FacebookClientManager.OnActivityResult(requestCode, resultCode, data);
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
         {
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);

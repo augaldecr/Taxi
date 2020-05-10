@@ -364,4 +364,10 @@
   <data name="Target" xml:space="preserve">
     <value>Cible</value>
   </data>
+  <data name="LoginFacebook" xml:space="preserve">
+    <value>Se connecter avec Facbook</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>Image</value>
+  </data>
 </root>

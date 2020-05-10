@@ -538,6 +538,15 @@ namespace Taxi.Prism.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Login with Facebook.
+        /// </summary>
+        internal static string LoginFacebook {
+            get {
+                return ResourceManager.GetString("LoginFacebook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logout.
         /// </summary>
         internal static string Logout {
@@ -732,6 +741,15 @@ namespace Taxi.Prism.Resources {
         internal static string PhonePlaceHolder {
             get {
                 return ResourceManager.GetString("PhonePlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picture.
+        /// </summary>
+        internal static string Picture {
+            get {
+                return ResourceManager.GetString("Picture", resourceCulture);
             }
         }
         
