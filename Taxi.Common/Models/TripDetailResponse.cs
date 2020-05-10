@@ -2,7 +2,7 @@
 
 namespace Taxi.Common.Models
 {
-    public class TripDetailsResponse
+    public class TripDetailResponse
     {
         public int Id { get; set; }
 

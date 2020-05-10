@@ -32,7 +32,7 @@ namespace Taxi.Common.Models
 
         public string Remarks { get; set; }
 
-        public List<TripDetailsResponse> TripDetails { get; set; }
+        public List<TripDetailResponse> TripDetails { get; set; }
 
         public UserResponse User { get; set; }
     }

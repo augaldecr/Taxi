@@ -28,7 +28,7 @@ namespace Taxi.Web.Helpers
                    Target = t.Target,
                    TargetLatitude = t.TargetLatitude,
                    TargetLongitude = t.TargetLongitude,
-                   TripDetails = t.TripDetails?.Select(td => new TripDetailsResponse
+                   TripDetails = t.TripDetails?.Select(td => new TripDetailResponse
                    {
                        Date = td.Date,
                        Id = td.Id,
@@ -56,7 +56,7 @@ namespace Taxi.Web.Helpers
                 Target = tripEntity.Target,
                 TargetLatitude = tripEntity.TargetLatitude,
                 TargetLongitude = tripEntity.TargetLongitude,
-                TripDetails = tripEntity.TripDetails?.Select(td => new TripDetailsResponse
+                TripDetails = tripEntity.TripDetails?.Select(td => new TripDetailResponse
                 {
                     Date = td.Date,
                     Id = td.Id,
@@ -103,7 +103,7 @@ namespace Taxi.Web.Helpers
                 Taxi = ToTaxiResponse2(t.Taxi),
                 TargetLatitude = t.TargetLatitude,
                 TargetLongitude = t.TargetLongitude,
-                TripDetails = t.TripDetails.Select(td => new TripDetailsResponse
+                TripDetails = t.TripDetails.Select(td => new TripDetailResponse
                 {
                     Date = td.Date,
                     Id = td.Id,
