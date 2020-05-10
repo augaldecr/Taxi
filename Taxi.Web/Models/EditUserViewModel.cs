@@ -34,5 +34,10 @@ namespace Taxi.Web.Models
 
         [Display(Name = "Picture")]
         public string PicturePath { get; set; }
+
+        [Display(Name = "Picture")]
+        public string PictureFullPath => string.IsNullOrEmpty(PicturePath)
+            ? "https://taxiwebcr.azurewebsites.net//images/noimage.png"
+            : $"https://taxicr.blob.core.windows.net/users/{PicturePath}";
     }
 }

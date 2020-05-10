@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -20,25 +21,25 @@ namespace Taxi.Web.Controllers
     public class AccountController : Controller
     {
         private readonly IUserHelper _userHelper;
-        private readonly IImageHelper _imageHelper;
         private readonly ICombosHelper _combosHelper;
         private readonly IConfiguration _configuration;
         private readonly IMailHelper _mailHelper;
         private readonly DataContext _context;
+        private readonly IBlobHelper _blobHelper;
 
         public AccountController(IUserHelper userHelper,
-            IImageHelper imageHelper,
             ICombosHelper combosHelper,
             IConfiguration configuration,
             IMailHelper mailHelper, 
-            DataContext context)
+            DataContext context,
+            IBlobHelper blobHelper)
         {
             _userHelper = userHelper;
-            _imageHelper = imageHelper;
             _combosHelper = combosHelper;
             _configuration = configuration;
             _mailHelper = mailHelper;
             _context = context;
+            _blobHelper = blobHelper;
         }
 
         public IActionResult Login()
@@ -101,7 +102,7 @@ namespace Taxi.Web.Controllers
 
                 if (model.PictureFile != null)
                 {
-                    path = await _imageHelper.UploadImageAsync(model.PictureFile, "Users");
+                    path = await _blobHelper.UploadBlobAsync(model.PictureFile, "users");
                 }
 
                 Data.Entities.User user = await _userHelper.AddUserAsync(model, path);
@@ -166,7 +167,7 @@ namespace Taxi.Web.Controllers
 
                 if (model.PictureFile != null)
                 {
-                    path = await _imageHelper.UploadImageAsync(model.PictureFile, "Users");
+                    path = await _blobHelper.UploadBlobAsync(model.PictureFile, "users");
                 }
 
                 User user = await _userHelper.GetUserAsync(User.Identity.Name);
@@ -414,5 +415,15 @@ namespace Taxi.Web.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Users
+                .Include(u => u.Trips)
+                .Where(u => u.UserType == UserType.User)
+                .OrderBy(u => u.FirstName)
+                .ThenBy(u => u.LastName)
+                .ToListAsync());
+        }
     }
 }

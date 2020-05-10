@@ -88,8 +88,7 @@ namespace Taxi.Prism.ViewModels
             IsRunning = true;
 
             string url = App.Current.Resources["UrlAPI"].ToString();
-            bool connection = await _aPIService.CheckConnectionAsync(url);
-            if (!connection)
+            if (!_aPIService.CheckConnection())
             {
                 IsRunning = false;
                 await App.Current.MainPage.DisplayAlert(

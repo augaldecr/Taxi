@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Plugin.Connectivity;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -15,6 +14,45 @@ namespace Taxi.Common.Services
         public bool CheckConnection()
         {
             return Connectivity.NetworkAccess == NetworkAccess.Internet;
+        }
+
+        public async Task<Response> AddTripDetailsAsync(string urlBase, string servicePrefix, string controller, TripDetailsRequest model, string tokenType, string accessToken)
+        {
+            try
+            {
+                string request = JsonConvert.SerializeObject(model);
+                StringContent content = new StringContent(request, Encoding.UTF8, "application/json");
+                HttpClient client = new HttpClient
+                {
+                    BaseAddress = new Uri(urlBase)
+                };
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
+                string url = $"{servicePrefix}{controller}";
+                HttpResponseMessage response = await client.PostAsync(url, content);
+                string answer = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new Response
+                    {
+                        IsSuccess = false,
+                        Message = answer,
+                    };
+                }
+
+                return new Response
+                {
+                    IsSuccess = true,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = ex.Message,
+                };
+            }
         }
 
         public async Task<Response> NewTripAsync(string urlBase, string servicePrefix, string controller, TripRequest model, string tokenType, string accessToken)
@@ -152,15 +190,6 @@ namespace Taxi.Common.Services
                     Message = ex.Message,
                 };
             }
-        }
-
-        public async Task<bool> CheckConnectionAsync(string url)
-        {
-            if (!CrossConnectivity.Current.IsConnected)
-            {
-                return false;
-            }
-            return await CrossConnectivity.Current.IsRemoteReachable(url);
         }
 
         public async Task<Response> GetTaxiAsync(string plaque, string urlBase, string servicePrefix, string controller)

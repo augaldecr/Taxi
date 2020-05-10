@@ -31,6 +31,12 @@ namespace Taxi.Web.Data.Entities
         [Display(Name = "Picture")]
         public string PicturePath { get; set; }
 
+        [Display(Name = "Picture")]
+        public string PictureFullPath => string.IsNullOrEmpty(PicturePath)
+            ? "https://taxiwebcr.azurewebsites.net//images/noimage.png"
+            : $"https://taxicr.blob.core.windows.net/users/{PicturePath}";
+
+
         [Display(Name = "User type")]
         public UserType UserType { get; set; }
 
@@ -41,10 +47,5 @@ namespace Taxi.Web.Data.Entities
         public ICollection<TaxiEntity> Taxis { get; set; }
 
         public ICollection<Trip> Trips { get; set; }
-
-        public static implicit operator User(UserGroup v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
