@@ -8,14 +8,11 @@ namespace Taxi.Prism.Views
     public partial class MyTripPage : ContentPage
     {
         private static MyTripPage _instance;
-        private double _distance;
-        private Position _position;
 
         public MyTripPage()
         {
             InitializeComponent();
             _instance = this;
-            _distance = 1;
         }
 
         public static MyTripPage GetInstance()
@@ -27,16 +24,16 @@ namespace Taxi.Prism.Views
         {
             if (trip.SourceLatitude != 0 && trip.SourceLongitude != 0)
             {
-                _position = new Position(trip.SourceLatitude, trip.SourceLongitude);
-                AddPin(_position, trip.Source, Languages.StartTrip, PinType.Place);
-                MoveMap();
+                Position position = new Position(trip.SourceLatitude, trip.SourceLongitude);
+                AddPin(position, trip.Source, Languages.StartTrip, PinType.Place);
+                MoveMap(position);
             }
 
             if (trip.TargetLatitude != 0 && trip.TargetLongitude != 0)
             {
-                _position = new Position(trip.TargetLatitude, trip.TargetLongitude);
-                AddPin(_position, trip.Target, Languages.EndTrip, PinType.Place);
-                MoveMap();
+                Position position = new Position(trip.TargetLatitude, trip.TargetLongitude);
+                AddPin(position, trip.Target, Languages.EndTrip, PinType.Place);
+                MoveMap(position);
             }
 
             for (int i = 0; i < trip.TripDetails.Count - 1; i++)
@@ -65,9 +62,11 @@ namespace Taxi.Prism.Views
             {
                 AddPin(b, string.Empty, string.Empty, PinType.SavedPin);
             }
+
+            MoveMap(b);
         }
 
-        private void AddPin(Position position, string address, string label, PinType pinType)
+        public void AddPin(Position position, string address, string label, PinType pinType)
         {
             MyMap.Pins.Add(new Pin
             {
@@ -78,15 +77,9 @@ namespace Taxi.Prism.Views
             });
         }
 
-        private void MoveMap()
+        private void MoveMap(Position position)
         {
-            MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(_position, Distance.FromKilometers(_distance)));
-        }
-
-        private void MySlider_ValueChanged(object sender, ValueChangedEventArgs e)
-        {
-            _distance = e.NewValue;
-            MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(_position, Distance.FromKilometers(_distance)));
+            MyMap.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(.5)));
         }
     }
 }
