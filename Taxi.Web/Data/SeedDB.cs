@@ -81,7 +81,9 @@ namespace Taxi.Web.Data
         {
             if (!_dataContext.UserGroups.Any())
             {
-                foreach (User owner in _dataContext.Users.Where(u => u.UserType == UserType.User))
+                var owners = _dataContext.Users.Where(u => u.UserType == UserType.User);
+
+                foreach (User owner in owners)
                 {
                     List<User> users = new List<User>();
 
