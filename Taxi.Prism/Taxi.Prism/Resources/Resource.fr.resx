@@ -229,4 +229,76 @@
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="PictureSource" xml:space="preserve">
+    <value>Sélectionnez une source pour la photo!</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="FromCamera" xml:space="preserve">
+    <value>De l'appareil photo</value>
+  </data>
+  <data name="FromGallery" xml:space="preserve">
+    <value>À partir de la galerie</value>
+  </data>
+  <data name="PasswordRecover" xml:space="preserve">
+    <value>Retrouver son mot de passe</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Mot de passe oublié ?</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Modifier le mot de passe</value>
+  </data>
+  <data name="UserUpdated" xml:space="preserve">
+    <value>Utilisateur mis à jour.</value>
+  </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Confirmer le nouveau mot de passe</value>
+  </data>
+  <data name="ConfirmNewPasswordError" xml:space="preserve">
+    <value>Vous devez confirmer votre Mot de passe.</value>
+  </data>
+  <data name="ConfirmNewPasswordError2" xml:space="preserve">
+    <value>La confirmation du mot de passe ne correspond pas</value>
+  </data>
+  <data name="ConfirmNewPasswordPlaceHolder" xml:space="preserve">
+    <value>Confirmation du nouveau mot de passe</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Mot de passe actuel</value>
+  </data>
+  <data name="CurrentPasswordError" xml:space="preserve">
+    <value>Vous devez saisir votre mot de passe!</value>
+  </data>
+  <data name="CurrentPasswordPlaceHolder" xml:space="preserve">
+    <value>Tapez votre mot de passe actuel</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Nouveau mot de passe</value>
+  </data>
+  <data name="NewPasswordError" xml:space="preserve">
+    <value>Vous devez ype un nouveau mot de passe!</value>
+  </data>
+  <data name="NewPasswordPlaceHolder" xml:space="preserve">
+    <value>Entrez un nouveau mot de passe :</value>
+  </data>
+  <data name="GeolocationError" xml:space="preserve">
+    <value>Le problème du GPS!</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="EndTrip" xml:space="preserve">
+    <value>Séjour</value>
+  </data>
+  <data name="ConfirmAddress" xml:space="preserve">
+    <value>Confirmez l'adresse</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Taxi Qualifier</value>
+  </data>
 </root>

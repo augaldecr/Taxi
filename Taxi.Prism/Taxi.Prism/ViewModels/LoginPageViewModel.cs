@@ -57,7 +57,7 @@ namespace Taxi.Prism.ViewModels
 
         private async void ForgotPasswordAsync()
         {
-            //await _navigationService.NavigateAsync(nameof(RememberPasswordPage));
+            await _navigationService.NavigateAsync(nameof(RememberPasswordPage));
         }
 
         private async void LoginAsync()

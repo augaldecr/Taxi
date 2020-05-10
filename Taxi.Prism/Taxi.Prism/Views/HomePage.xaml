@@ -11,12 +11,9 @@
         <maps:Map x:Name="MyMap"
                   MapType="Street"/>
         <StackLayout Padding="5">
-            <Button BackgroundColor="Green"
-                    CornerRadius="20"
-                    HeightRequest="40"
+            <Button Command="{Binding StartTripCommand}"
                     Margin="10,0"
-                    Text="{i18n:Translate StartTrip}"
-                    TextColor="White"/>
+                    Text="{i18n:Translate StartTrip}" />
         </StackLayout>
     </StackLayout>
 </ContentPage>
